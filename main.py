@@ -57,15 +57,15 @@ def handle(msg):
     elif '/start' in msg['text'] or '/start@wesToDoBot' in msg['text']: 
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
-      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['from']['id']))
+      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
       data = cur.fetchone()
       if data is None:
-        cur.execute("INSERT INTO chans (chan) VALUES ("+str(msg['from']['id'])+")")
+        cur.execute("INSERT INTO chans (chan) VALUES ("+str(msg['chat']['id'])+")")
         con.commit()
     elif '/add' in msg['text'] or '/add@wesToDoBot' in msg['text']:
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
-      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['from']['id']))
+      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
       data = cur.fetchone()
       if data is not None:
         query = "INSERT INTO todos (chan,finish,todo) VALUES (" + str(data[0])  + ",0,\"" + msg['text'].split(' ',1)[1] + "\")"
@@ -75,7 +75,7 @@ def handle(msg):
     elif '/get' in msg['text'] or '/get@wesToDoBot' in msg['text']:
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
-      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['from']['id']))
+      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
       data = cur.fetchone()
       if data is not None:
         msg = get_todo(data[0])
@@ -83,7 +83,7 @@ def handle(msg):
     elif '/finish' in msg['text'] or '/finish@wesToDoBot' in msg['text']:
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
-      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['from']['id']))
+      cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
       data = cur.fetchone()
       if data is not None:
         cur.execute("SELECT * FROM todos WHERE chan=" + str(data[0]) + " AND finish=0")
