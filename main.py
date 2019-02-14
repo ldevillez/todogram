@@ -33,6 +33,18 @@ def get_todo(id):
     i += 1
   return msg
 
+def pingAll():
+  con = sqlite3.connect('todo.db')
+  cur = con.cursor()
+  cur.execute("SELECT * FROM chans")
+  data = cur.fetchall()
+
+  if data is not None:
+    for (id,chanId) in data:
+      msg = get_todo(id)
+      msg = "*Liste des chose à faire*\n" + msg
+      bot.sendMessage(chanId,msg)
+
 def handle(msg):
   if 'text' in msg:
     if '/help' in msg['text'] or '/help@wesToDoBot' in msg['text']:
@@ -84,8 +96,10 @@ def handle(msg):
         msg = get_todo(data[0])
         bot.sendMessage(data[1], msg)
 MessageLoop(bot, handle).run_as_thread()
+schedule.every().day.at("8:00").do(pingAll)
 
 while True:
-    time.sleep(1)
+  schedule.run_pending()
+  time.sleep(1)
 
 
