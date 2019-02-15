@@ -88,9 +88,8 @@ def handle(msg):
       if data is not None:
         cur.execute("SELECT * FROM todos WHERE chan=" + str(data[0]) + " AND finish=0")
         Todos = cur.fetchall()
-        print(int(msg['text'].split(' ')[1]))
-        id = Todos[int(msg['text'].split(' ')[1])]
-        query = "UPDATE todos SET finish=1 WHERE id =" +str(id[0]-1)
+        id = Todos[int(msg['text'].split(' ')[1])-1]
+        query = "UPDATE todos SET finish=1 WHERE id =" +str(id[0])
         cur.execute(query)
         con.commit()
         msg = get_todo(data[0])
