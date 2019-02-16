@@ -26,24 +26,27 @@ def get_todo(id):
   cur = con.cursor()
   cur.execute("SELECT * FROM todos WHERE chan=" + str(id) + " AND finish=0")
   Todos = cur.fetchall()
-  msg = ''
-  i = 1
-  for (id, chan, todo, finish) in Todos:
-    msg += str(i) + ": " + todo + '\n'
-    i += 1
-  return msg
+  if Todos is None:
+    return None
+  else:
+    msg = ''
+    i = 1
+    for (id, chan, todo, finish) in Todos:
+      msg += str(i) + ": " + todo + '\n'
+      i += 1
+    return msg
 
 def pingAll():
   con = sqlite3.connect('todo.db')
   cur = con.cursor()
   cur.execute("SELECT * FROM chans")
   data = cur.fetchall()
-
   if data is not None:
     for (id,chanId) in data:
       msg = get_todo(id)
-      msg = "*Liste des chose à faire*\n" + msg
-      bot.sendMessage(chanId,msg)
+      if msg is not None:
+        msg = "*Liste des chose à faire*\n" + msg
+        bot.sendMessage(chanId,msg)
 
 def handle(msg):
   if 'text' in msg:
