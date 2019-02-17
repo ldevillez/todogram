@@ -26,7 +26,7 @@ def get_todo(id):
   cur = con.cursor()
   cur.execute("SELECT * FROM todos WHERE chan=" + str(id) + " AND finish=0")
   Todos = cur.fetchall()
-  if Todos is None:
+  if len(Todos) < 1:
     return None
   else:
     msg = ''
@@ -55,6 +55,7 @@ def handle(msg):
       *-/start*: init le bot sur un chan
       *-/help*: GNEU
       *-/add text*: ajoute text dans la liste des todos
+      *-/finish num*: retire le todo correspondant au numéro num
       """
       bot.sendMessage(msg['from']['id'],msgToSend,parse_mode = 'Markdown')
     elif '/start' in msg['text'] or '/start@wesToDoBot' in msg['text']: 
