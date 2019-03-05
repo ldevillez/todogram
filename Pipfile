@@ -8,6 +8,7 @@ telepot = "*"
 schedule = "*"
 
 [dev-packages]
+pylint = "*"
 
 [requires]
 python_version = "3.*"

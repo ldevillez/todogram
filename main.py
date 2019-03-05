@@ -99,7 +99,8 @@ def handle(msg):
         msg = get_todo(data[0])
         bot.sendMessage(data[1], msg)
 MessageLoop(bot, handle).run_as_thread()
-schedule.every().day.at("08:00").do(pingAll)
+schedule.every().day.at("10:00").do(pingAll)
+schedule.every().day.at("21:00").do(pingAll)
 
 while True:
   schedule.run_pending()
