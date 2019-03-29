@@ -46,7 +46,10 @@ def pingAll():
       msg = get_todo(id)
       if msg is not None:
         msg = "*Liste des chose à faire*\n" + msg
-        bot.sendMessage(chanId,msg)
+        try:
+          bot.sendMessage(chanId,msg)
+        except:
+          print('error du cul')
 
 def handle(msg):
   if 'text' in msg:
@@ -103,7 +106,10 @@ schedule.every().day.at("10:00").do(pingAll)
 schedule.every().day.at("21:00").do(pingAll)
 
 while True:
-  schedule.run_pending()
-  time.sleep(1)
+  try:
+    schedule.run_pending()
+    time.sleep(1)
+  except:
+    print('lol')
 
 
