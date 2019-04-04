@@ -5,7 +5,7 @@ import schedule
 import sqlite3
 import sys
 import subprocess
-from conf import token
+from conf import token, admin
 
 
 con = sqlite3.connect('todo.db')
@@ -104,6 +104,15 @@ def handle(msg):
           con.commit()
           msg = get_todo(data[0])
           bot.sendMessage(data[1], msg)
+      elif '/admin' in command:
+        if msg['from']['id'] in admin:
+          con = sqlite3.connect('todo.db')
+          cur = con.cursor()
+          cur.execute("SELECT * FROM chans")
+          chan = cur.fetchall()
+          for i in chan:
+            bot.sendMessage(i[1],msg['text'].split(' ')[1])
+          
 MessageLoop(bot, handle).run_as_thread()
 schedule.every().day.at("10:00").do(pingAll)
 schedule.every().day.at("21:00").do(pingAll)
