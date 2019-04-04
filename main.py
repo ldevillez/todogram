@@ -29,7 +29,7 @@ def get_todo(id):
   if len(Todos) < 1:
     return None
   else:
-    msg = ''
+    msg = '**Liste des choses à faire**\n'
     i = 1
     for (id, chan, todo, finish) in Todos:
       msg += str(i) + ": " + todo + '\n'
@@ -53,7 +53,7 @@ def pingAll():
 
 def handle(msg):
   if 'text' in msg:
-    if '/help' in msg['text'] or '/help@wesToDoBot' in msg['text']:
+    if '/help' is msg['text'] or '/help@wesToDoBot' is msg['text']:
       msgToSend = """LISTE HERE YOU LITTLE SHIT
       *-/start*: init le bot sur un chan
       *-/help*: GNEU
@@ -61,7 +61,7 @@ def handle(msg):
       *-/finish num*: retire le todo correspondant au numéro num
       """
       bot.sendMessage(msg['from']['id'],msgToSend,parse_mode = 'Markdown')
-    elif '/start' in msg['text'] or '/start@wesToDoBot' in msg['text']: 
+    elif '/start' is msg['text'] or '/start@wesToDoBot' is msg['text']: 
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
       cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
@@ -69,7 +69,7 @@ def handle(msg):
       if data is None:
         cur.execute("INSERT INTO chans (chan) VALUES ("+str(msg['chat']['id'])+")")
         con.commit()
-    elif '/add' in msg['text'] or '/add@wesToDoBot' in msg['text']:
+    elif '/add' is msg['text'] or '/add@wesToDoBot' is msg['text']:
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
       cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
@@ -79,7 +79,7 @@ def handle(msg):
         print(query)
         cur.execute(query)
         con.commit()
-    elif '/get' in msg['text'] or '/get@wesToDoBot' in msg['text']:
+    elif '/get' is msg['text'] or '/get@wesToDoBot' is msg['text']:
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
       cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
@@ -87,7 +87,7 @@ def handle(msg):
       if data is not None:
         msg = get_todo(data[0])
         bot.sendMessage(data[1], msg)
-    elif '/finish' in msg['text'] or '/finish@wesToDoBot' in msg['text']:
+    elif '/finish' is msg['text'] or '/finish@wesToDoBot' is msg['text']:
       con = sqlite3.connect('todo.db')
       cur = con.cursor()
       cur.execute("SELECT * FROM chans WHERE chan=" + str(msg['chat']['id']))
