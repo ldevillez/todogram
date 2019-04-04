@@ -111,7 +111,7 @@ def handle(msg):
           cur.execute("SELECT * FROM chans")
           chan = cur.fetchall()
           for i in chan:
-            bot.sendMessage(i[1],msg['text'].split(' ')[1])
+            bot.sendMessage(i[1],msg['text'].split(' ',1)[1])
           
 MessageLoop(bot, handle).run_as_thread()
 schedule.every().day.at("10:00").do(pingAll)
