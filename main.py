@@ -45,7 +45,7 @@ def pingAll():
     for (id,chanId) in data:
       msg = get_todo(id)
       if msg is not None:
-        msg = "*Liste des chose à faire*\n" + msg
+        msg = "*Liste des choses à faire*\n" + msg
         try:
           bot.sendMessage(chanId,msg)
         except:
@@ -61,7 +61,7 @@ def handle(msg):
         *-/start*: init le bot sur un chan
         *-/help*: GNEU
         *-/add text*: ajoute text dans la liste des todos
-        *-/finish num*: retire le todo correspondant au numéro num
+        *-/finish _num_*: retire le todo correspondant au numéro num
         """
         bot.sendMessage(msg['from']['id'],msgToSend,parse_mode = 'Markdown')
       elif '/start' in command:
