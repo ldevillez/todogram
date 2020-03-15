@@ -52,7 +52,6 @@ def pingAll():
           print('error du cul')
 
 def handle(msg):
-  
   if 'text' in msg:
     command = msg['text'].split(' ')[0]
     if ('@wesToDoBot' in command) or '@' not in command:
